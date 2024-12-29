@@ -3,6 +3,7 @@
 
 #include "../utils/tensor.h"
 #include <vector>
+#include <random>  // Add this include
 
 class ConvLayer {
 public:
@@ -23,11 +24,10 @@ public:
     int stride;
     int padding;
 
-    std::vector<Tensor> kernels;       // Convolution kernels (weights)
-    std::vector<float> biases;         // Biases
-    std::vector<Tensor> grad_kernels;  // Gradients for kernels
-    std::vector<float> grad_biases;    // Gradients for biases
-    
+    std::vector<Tensor> kernels;
+    std::vector<float> biases;
+    std::vector<Tensor> grad_kernels;
+    std::vector<float> grad_biases;
 };
 
 #endif // CONV_LAYER_H

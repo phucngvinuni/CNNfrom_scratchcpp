@@ -6,11 +6,7 @@
 class ReLULayer {
 public:
     Tensor forward(const Tensor& input);
-    // Example for ReLULayer backward function
-    Tensor ReLULayer::backward(const Tensor& grad_output) {
-    // Implement backward logic here
-}
-
+    Tensor backward(const Tensor& grad_output);  // Just the declaration, no implementation here
 };
 
 #endif // RELU_LAYER_H

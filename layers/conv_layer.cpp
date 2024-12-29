@@ -1,15 +1,35 @@
 #include "conv_layer.h"
 #include <cmath>
+#include <random>
 
-// Constructor
 ConvLayer::ConvLayer(int input_channels, int output_channels, int kernel_size, int stride, int padding)
     : input_channels(input_channels), output_channels(output_channels), kernel_size(kernel_size),
       stride(stride), padding(padding) {
-    // Initialize kernels and biases with random values
+    
+    // Initialize random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    
+    // Calculate initialization scale (Xavier initialization)
+    float scale = std::sqrt(2.0f / (input_channels * kernel_size * kernel_size));
+    std::normal_distribution<float> dist(0.0f, scale);
+
+    // Initialize kernels and biases
     for (int i = 0; i < output_channels; ++i) {
         kernels.push_back(Tensor(kernel_size, kernel_size, input_channels));
-        biases.push_back(0.0f); // Initial biases set to 0
+        for (int h = 0; h < kernel_size; ++h) {
+            for (int w = 0; w < kernel_size; ++w) {
+                for (int c = 0; c < input_channels; ++c) {
+                    kernels[i].at(h, w, c) = dist(gen);
+                }
+            }
+        }
+        biases.push_back(0.0f);
     }
+
+    // Initialize gradient storage
+    grad_kernels.resize(output_channels, Tensor(kernel_size, kernel_size, input_channels));
+    grad_biases.resize(output_channels, 0.0f);
 }
 
 // Forward pass
