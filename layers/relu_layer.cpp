@@ -1,7 +1,13 @@
 #include "relu_layer.h"
 #include <algorithm>
 
+// Define the default constructor
+ReLULayer::ReLULayer() : last_input(0, 0, 0) {
+    // Initializes last_input with zero dimensions
+}
+
 Tensor ReLULayer::forward(const Tensor& input) {
+    last_input = input; // Store input
     Tensor output = input;
     for (int h = 0; h < input.getHeight(); ++h) {
         for (int w = 0; w < input.getWidth(); ++w) {
@@ -14,11 +20,12 @@ Tensor ReLULayer::forward(const Tensor& input) {
 }
 
 Tensor ReLULayer::backward(const Tensor& grad_output) {
-    Tensor grad_input = grad_output;
+    Tensor grad_input(grad_output.getHeight(), grad_output.getWidth(), grad_output.getDepth());
+
     for (int h = 0; h < grad_output.getHeight(); ++h) {
         for (int w = 0; w < grad_output.getWidth(); ++w) {
             for (int d = 0; d < grad_output.getDepth(); ++d) {
-                grad_input.at(h, w, d) = grad_output.at(h, w, d) > 0 ? grad_output.at(h, w, d) : 0.0f;
+                grad_input.at(h, w, d) = (last_input.at(h, w, d) > 0) ? grad_output.at(h, w, d) : 0.0f;
             }
         }
     }

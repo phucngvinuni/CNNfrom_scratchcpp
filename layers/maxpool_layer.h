@@ -5,16 +5,15 @@
 
 class MaxPoolingLayer {
 public:
-    // Constructor: Takes the size of the pooling window
     MaxPoolingLayer(int pool_size);
 
-    // Forward pass: Applies max pooling to the input tensor
     Tensor forward(const Tensor& input);
-
-    // Backward pass: Computes gradients for the pooling layer
     Tensor backward(const Tensor& grad_output);
+
 private:
-    int pool_size; // Size of the pooling window (e.g., 2x2 or 3x3)
+    int pool_size;
+    Tensor indices;     // Store indices of max values
+    Tensor input_shape; // Store input shape for backward
 };
 
 #endif // MAXPOOL_LAYER_H
