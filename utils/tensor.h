@@ -18,7 +18,7 @@ public:
     std::vector<float>& getData();       // Get reference to data (if necessary)
     const std::vector<float>& getData() const; // For const access
 
-private:
+
     int height, width, depth;
     std::vector<float> data;
 };

@@ -5,12 +5,11 @@
 
 class ReLULayer {
 public:
-    ReLULayer();  // Declare default constructor
+    ReLULayer();  // Default constructor
     Tensor forward(const Tensor& input);
     Tensor backward(const Tensor& grad_output);
-
 private:
-    Tensor last_input; // Store input for backward pass
+    Tensor last_input;
 };
 
 #endif // RELU_LAYER_H

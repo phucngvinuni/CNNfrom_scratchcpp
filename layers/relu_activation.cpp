@@ -1,19 +1,33 @@
-#include "relu_activation.h"
+#include "relu_layer.h"
 #include <algorithm>
 
-std::vector<float> ReLUActivation::forward(const std::vector<float>& input) {
-    last_input = input; // Store input for backpropagation
-    std::vector<float> output(input.size());
-    for (size_t i = 0; i < input.size(); ++i) {
-        output[i] = std::max(0.0f, input[i]);
+// Define the default constructor
+ReLULayer::ReLULayer() : last_input(0, 0, 0) {
+    // Initializes last_input with zero dimensions
+}
+
+Tensor ReLULayer::forward(const Tensor& input) {
+    last_input = input; // Store input
+    Tensor output = input;
+    for (int h = 0; h < input.getHeight(); ++h) {
+        for (int w = 0; w < input.getWidth(); ++w) {
+            for (int d = 0; d < input.getDepth(); ++d) {
+                output.at(h, w, d) = std::max(0.0f, input.at(h, w, d));
+            }
+        }
     }
     return output;
 }
 
-std::vector<float> ReLUActivation::backward(const std::vector<float>& grad_output) {
-    std::vector<float> grad_input(grad_output.size());
-    for (size_t i = 0; i < grad_output.size(); ++i) {
-        grad_input[i] = (last_input[i] > 0) ? grad_output[i] : 0.0f;
+Tensor ReLULayer::backward(const Tensor& grad_output) {
+    Tensor grad_input = grad_output;
+    for (int h = 0; h < grad_output.getHeight(); ++h) {
+        for (int w = 0; w < grad_output.getWidth(); ++w) {
+            for (int d = 0; d < grad_output.getDepth(); ++d) {
+                // Use last_input to check where ReLU was active
+                grad_input.at(h, w, d) = (last_input.at(h, w, d) > 0) ? grad_output.at(h, w, d) : 0.0f;
+            }
+        }
     }
     return grad_input;
 }

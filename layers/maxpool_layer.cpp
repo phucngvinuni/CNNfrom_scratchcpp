@@ -4,20 +4,16 @@
 
 MaxPoolingLayer::MaxPoolingLayer(int pool_size)
     : pool_size(pool_size),
-      indices(),       // Default initialize indices
-      input_shape()    // Default initialize input_shape
+      indices(),
+      input_shape()
 {}
 
 Tensor MaxPoolingLayer::forward(const Tensor& input) {
-    // Store input shape for backward pass
     input_shape = input;
-
-    // Calculate output dimensions after pooling
     int out_height = input.getHeight() / pool_size;
     int out_width = input.getWidth() / pool_size;
     Tensor output(out_height, out_width, input.getDepth());
     indices = Tensor(out_height, out_width, input.getDepth());
-
     // Perform max pooling for each depth channel
     for (int d = 0; d < input.getDepth(); ++d) {
         for (int h = 0; h < out_height; ++h) {
@@ -53,10 +49,9 @@ Tensor MaxPoolingLayer::forward(const Tensor& input) {
 
 Tensor MaxPoolingLayer::backward(const Tensor& grad_output) {
     Tensor grad_input(input_shape.getHeight(), input_shape.getWidth(), input_shape.getDepth());
-
-    // Initialize grad_input to zeros
-    for (size_t i = 0; i < grad_input.getData().size(); ++i) {
-        grad_input.getData()[i] = 0.0f;
+    grad_input.zero(); // Use zero() method to reset data
+   for (size_t i = 0; i < grad_input.data.size(); ++i) {
+        grad_input.data[i] = 0.0f;
     }
 
     // Distribute gradients to where the max values came from
@@ -73,3 +68,4 @@ Tensor MaxPoolingLayer::backward(const Tensor& grad_output) {
 
     return grad_input;
 }
+

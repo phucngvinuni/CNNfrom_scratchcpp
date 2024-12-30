@@ -8,7 +8,7 @@ BUILDDIR = build
 TARGET = $(BUILDDIR)/cnn
 
 # Source files
-SRCFILES = main.cpp layers/conv_layer.cpp layers/relu_layer.cpp utils/tensor.cpp utils/mnist_loader.cpp layers/fully_connected_layer.cpp layers/flatten_layer.cpp layers/maxpool_layer.cpp utils/loss.cpp utils/optimizer.cpp layers/relu_activation.cpp
+SRCFILES = main.cpp layers/conv_layer.cpp layers/relu_layer.cpp utils/tensor.cpp utils/mnist_loader.cpp layers/fully_connected_layer.cpp layers/flatten_layer.cpp layers/maxpool_layer.cpp utils/loss.cpp utils/optimizer.cpp
 OBJFILES = $(patsubst %.cpp, $(BUILDDIR)/%.o, $(SRCFILES))
 
 # Default rule

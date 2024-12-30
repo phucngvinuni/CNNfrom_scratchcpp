@@ -21,7 +21,6 @@ public:
                     const std::vector<float>& grad_biases,
                     float learning_rate);
 
-private:
     float momentum;
 };
 
