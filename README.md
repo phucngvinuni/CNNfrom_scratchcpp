@@ -1,4 +1,6 @@
 
+
+```markdown
 # CNN from Scratch in C++
 
 This repository implements a **Convolutional Neural Network (CNN)** from scratch in **C++**. The project demonstrates training on the MNIST dataset, handling forward and backward passes, gradient updates, and basic optimization without relying on external machine learning libraries.
@@ -7,7 +9,7 @@ This repository implements a **Convolutional Neural Network (CNN)** from scratch
 
 ## **Directory Structure**
 
-
+```plaintext
 phucngvinuni-cnnfrom_scratchcpp/
 ├── README.md               # Project documentation
 ├── Makefile                # Compilation instructions
@@ -28,7 +30,7 @@ phucngvinuni-cnnfrom_scratchcpp/
 │   ├── loss.cpp/h          # Loss functions and gradients
 │   ├── optimizer.cpp/h     # Optimizers
 │   ├── tensor.cpp/h        # Tensor implementation
-
+```
 
 ---
 
@@ -135,4 +137,3 @@ We welcome contributions to enhance this project. To contribute:
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
 
----
